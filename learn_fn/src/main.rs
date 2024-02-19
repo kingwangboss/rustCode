@@ -27,4 +27,10 @@ fn main() {
 
     let result = other_fun2(2, 4);
     println!("result = {}", result);
+
+    let result1 = other_fun3(3, 6);
+    println!("result1 = {}", result1);
+
+    let result2 = other_fun4(4, 8);
+    println!("result2 = {}", result2);
 }
