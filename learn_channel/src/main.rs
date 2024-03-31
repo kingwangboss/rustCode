@@ -7,6 +7,7 @@ use std::{sync::mpsc, thread, time::Duration};
 // b.通过spmc::channel,创建通道，spmc是一个生产者，多个消费者；
 fn main() {
     let (tx, rx) = mpsc::channel();
+    let tx1 = mpsc::Sender::clone(&tx);
     thread::spawn(move || {
         let vals = vec![
             String::from("hi"),
@@ -22,6 +23,22 @@ fn main() {
         
     });
 
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("A"),
+            String::from("B"),
+            String::from("B"),
+            String::from("D"),
+        ];
+
+        for val in vals {
+            tx1.send(val).unwrap();
+            thread::sleep(Duration::from_secs(1));
+        };
+        
+    });
+
+    
     for recv in rx {
         println!("receiver: {}", recv);
     }
